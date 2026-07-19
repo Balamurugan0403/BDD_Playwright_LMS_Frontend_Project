@@ -22,7 +22,8 @@ module.exports = {
         "html:reports/cucumber-report.html",
         "rerun:rerun/@rerun.txt"
     ],
-        parallel: 1
+        parallel: 1,
+        dryRun: true
     },
     rerun:{
         requireModule: ["ts-node/register"],
