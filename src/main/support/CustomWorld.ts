@@ -1,12 +1,18 @@
-import { BrowserContext, Browser, Page } from "@playwright/test";
+import { Browser, BrowserContext, Page } from "@playwright/test";
 import { World, setWorldConstructor } from "@cucumber/cucumber";
+
+//import { SidebarPage } from "../../test/pages/SidebarPage";
+//import { TrainingSummaryPage } from "../../test/pages/TrainingSummaryPage";
+import { AddTraineePage } from "../../test/pages/AddTraineePage";
 
 export class CustomWorld extends World {
     browser!: Browser;
     context!: BrowserContext;
     page!: Page;
-    // Add one line per Page Object as you create it for the new site, e.g.:
-    // loginPage!: LoginPage;
+
+   // sidebarPage!: SidebarPage;
+    //trainingSummaryPage!: TrainingSummaryPage;
+    addTraineePage!: AddTraineePage;
 }
 
 setWorldConstructor(CustomWorld);
