@@ -1,5 +1,5 @@
 import{Locator, Page} from "@playwright/test"
-import { config } from "../../main/config/Config";
+import { config } from "../../main/config/config";
 
 export class BasePage{
     constructor(protected page:Page){}

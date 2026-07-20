@@ -1,50 +1,59 @@
 import { Before, After, BeforeAll, AfterAll } from '@cucumber/cucumber';
-import { chromium, Browser, firefox, webkit } from '@playwright/test';
+import { chromium, firefox, webkit, Browser } from '@playwright/test';
+
 import { CustomWorld } from '../../main/support/CustomWorld';
 import { config } from '../../main/config/config';
 import { logger } from '../../main/utils/logger';
 
-import { EditEmployeePage } from './../pages/EditEmployeePage';
+import { AddTraineePage } from '../pages/AddTraineePage';
+import { EditEmployeePage } from '../pages/EditEmployeePage';
 
 let browser: Browser;
+
 BeforeAll(async () => {
     if (config.browser === "chromium") {
-        logger.info("Launching chrome browser");
-        browser = await chromium.launch({ headless: config.headless, slowMo: config.slowMo });
-        logger.info("Chrome browser launched");
-    }
-    else if (config.browser === "firefox") {
-        logger.info("Launching firefox browser");
-        browser = await firefox.launch({ headless: config.headless, slowMo: config.slowMo });
-        logger.info("Firefox browser launched");
-    }
-    else {
-        logger.info("Launching safari browser");
-        browser = await webkit.launch({ headless: config.headless, slowMo: config.slowMo });
-        logger.info("Safari browser launched");
+        logger.info("Launching Chrome browser");
+        browser = await chromium.launch({
+            headless: config.headless,
+            slowMo: config.slowMo
+        });
+    } else if (config.browser === "firefox") {
+        logger.info("Launching Firefox browser");
+        browser = await firefox.launch({
+            headless: config.headless,
+            slowMo: config.slowMo
+        });
+    } else {
+        logger.info("Launching WebKit browser");
+        browser = await webkit.launch({
+            headless: config.headless,
+            slowMo: config.slowMo
+        });
     }
 });
 
-Before(async function (this: CustomWorld, scenario) {
+Before(async function (this: CustomWorld) {
+
     this.browser = browser;
-    this.context = await this.browser.newContext();
+    this.context = await browser.newContext();
     this.page = await this.context.newPage();
 
-    this.editEmployee = new EditEmployeePage(this.page);
+    this.editEmployeePage = new EditEmployeePage(this.page);
+    this.addTraineePage = new AddTraineePage(this.page);
+
 });
 
 After(async function (this: CustomWorld, scenario) {
+
     if (scenario.result?.status === "FAILED") {
-        if (this.page) {
-            await this.page.screenshot({ path: `reports/screenshots/${Date.now()}.png`, fullPage: true });
-        }
+        await this.page.screenshot({
+            path: `reports/screenshots/${Date.now()}.png`,
+            fullPage: true
+        });
     }
-    if (this.page) {
-        await this.page.close();
-    }
-    if (this.context) {
-        await this.context.close();
-    }
+
+    await this.page.close();
+    await this.context.close();
 });
 
 AfterAll(async () => {
