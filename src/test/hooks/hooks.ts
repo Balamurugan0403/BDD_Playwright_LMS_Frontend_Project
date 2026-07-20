@@ -61,7 +61,7 @@ Before(async function (this: CustomWorld) {
     // this.pedagogyPage = new PedagogyPage(this.page);
     // this.serviceModelPage = new ServiceModelPage(this.page);
     // this.trainingSummaryPage = new TrainingSummaryPage(this.page);
-    // this.addTraineePage = new AddTraineePage(this.page);
+    this.addTraineePage = new AddTraineePage(this.page);
 
 });
 

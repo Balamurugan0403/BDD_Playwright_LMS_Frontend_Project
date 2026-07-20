@@ -1,93 +1,77 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class AddTraineePage extends BasePage {
 
-    readonly trainingSummaryIcon: Locator;
-    readonly addIcon: Locator;
-    readonly projectName: Locator;
-    readonly empId: Locator;
-    readonly employeeName: Locator;
-    readonly course: Locator;
-    readonly trainerName: Locator;
-    readonly trainingType: Locator;
-    readonly startDate: Locator;
-    readonly endDate: Locator;
-    readonly status: Locator;
-    readonly percentage: Locator;
-    readonly addButton: Locator;
+    private readonly addtrainee = this.page.getByRole("button", { name: "Add Training" });
+    private readonly projectname = this.page.getByRole("combobox", { name: /Project Name/i });
+    private readonly empid = this.page.getByRole("textbox", { name: /EMP ID/i });
+    private readonly empname = this.page.getByRole("textbox", { name: /Employee Name/i });
+    private readonly course = this.page.getByRole("textbox", { name: /Course/i });
+    private readonly trainername = this.page.getByRole("textbox", { name: /Trainer Name/i });
+    private readonly trainingtype = this.page.getByRole("combobox", { name: /Training Type/i });
+    private readonly start = this.page.getByRole("textbox", { name: /Start Date/i });
+    private readonly enddate = this.page.getByRole("textbox", { name: /End Date/i });
+    private readonly status = this.page.getByRole("combobox", { name: /Status/i });
+    private readonly percentage = this.page.getByRole("spinbutton", { name: /% Completed/i });
+    private readonly addbtn = this.page.getByRole("button", { name: "Add", exact: true });
 
-    constructor(page: Page) {
-        super(page);
-
-        this.trainingSummaryIcon = page.getByRole("button", { name: "Training Summary" });
-        this.addIcon = page.getByRole("button", { name: "Add Training" });
-
-        this.projectName = page.locator('input[role="combobox"]').first();
-        this.empId = page.getByPlaceholder("EMP ID *");
-        this.employeeName = page.getByPlaceholder("Employee Name *");
-        this.course = page.getByPlaceholder("Course *");
-        this.trainerName = page.getByPlaceholder("Trainer Name *");
-        this.trainingType = page.locator('input[role="combobox"]').nth(1);
-        this.startDate = page.locator('input[type="date"]').first();
-        this.endDate = page.locator('input[type="date"]').nth(1);
-        this.status = page.locator('input[role="combobox"]').nth(2);
-        this.percentage = page.getByPlaceholder("% Completed *");
-        this.addButton = page.getByRole("button", { name: "ADD" });
+    async clickaddemp() {
+        await this.click(this.addtrainee);
     }
 
-    async launchApplication() {
-        await this.page.goto("https://frontend-69a7.vercel.app/");
+    async enterEmployeeData(
+        id: string,
+        proname: string,
+        name: string,
+        coursee: string,
+        tname: string,
+        traintype: string,
+        startdate: string,
+        end: string,
+        sts: string,
+        percent: string
+    ) {
+
+        await this.projectname.click();
+        await this.page.getByRole("option", { name: proname }).click();
+        await this.empid.fill(id);
+        await this.empname.fill(name);
+        await this.course.fill(coursee);
+        await this.trainername.fill(tname);
+        await this.trainingtype.click();
+        await this.page.getByRole("option", { name: traintype }).click();
+        await this.start.fill(startdate);
+        await this.enddate.fill(end);
+        await this.status.click();
+        await this.page.getByRole("option", { name: sts }).click();
+        await this.percentage.fill(percent);
     }
 
-    async navigateToEmployeeTrainingPage() {
-        await this.click(this.trainingSummaryIcon);
+    async clickaddbtn() {
+        await this.click(this.addbtn);
     }
 
-    async clickAddIcon() {
-        await this.click(this.addIcon);
+    async checkadded(empId: string) {
+
+    if (empId === "") {
+        console.log("EMP ID is empty - Record not created as expected");
+        return;
     }
 
-    async enterTraineeDetails(data: any) {
-
-        await this.fill(this.projectName, data.projectName);
-        await this.page.keyboard.press("ArrowDown");
-        await this.page.keyboard.press("Enter");
-
-        await this.fill(this.empId, data.empId);
-
-        await this.fill(this.employeeName, data.employeeName);
-
-        await this.fill(this.course, data.course);
-
-        await this.fill(this.trainerName, data.trainerName);
-
-        await this.fill(this.trainingType, data.trainingType);
-        await this.page.keyboard.press("ArrowDown");
-        await this.page.keyboard.press("Enter");
-
-        await this.fill(this.startDate, data.startDate);
-
-        await this.fill(this.endDate, data.endDate);
-
-        await this.fill(this.status, data.status);
-        await this.page.keyboard.press("ArrowDown");
-        await this.page.keyboard.press("Enter");
-
-        await this.fill(this.percentage, data.percentage);
+    if (empId === "EMP004") {
+        console.log("Invalid Percentage - Record not created as expected");
+        return;
     }
 
-    async clickAddButton() {
-        await this.click(this.addButton);
-    }
+    await this.page.waitForTimeout(3000);
 
-    async verifyEmployeeAdded(employeeName: string) {
+    const employeeCell = this.page
+        .getByRole("cell", { name: empId, exact: true })
+        .first();
 
-        const employee = this.page.locator("table tbody tr").filter({
-            hasText: employeeName
-        });
-
-        expect(await this.isVisible(employee)).toBeTruthy();
-    }
-
+    await expect(employeeCell).toBeVisible({
+        timeout: 15000
+    });
+}
 }

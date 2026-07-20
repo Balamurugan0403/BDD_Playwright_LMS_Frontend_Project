@@ -1,35 +1,59 @@
 import { Given, When, Then } from "@cucumber/cucumber";
-import traineeData from "../../resources/data/trainee.json";
+import path from "path";
+
 import { CustomWorld } from "../../main/support/CustomWorld";
+import { CSVReader } from "../../main/utils/csv_reader";
 
-Given("User launches the application", async function (this: CustomWorld) {
-    await this.addTraineePage.launchApplication();
-});
+const csvPath = path.resolve(__dirname,"../../resources/data/AddTrainee.csv");
+const trainingData = CSVReader.getData<any>(csvPath);
 
-Given("User navigates to the Employee Training page", async function (this: CustomWorld) {
-    
-    await this.addTraineePage.navigateToEmployeeTrainingPage();
-});
+let selectedData: any;
 
-When("User clicks on the Add icon", async function (this: CustomWorld) {
-    await this.addTraineePage.clickAddIcon();
-});
-
-When(
-    "User enters trainee details from {string}",
-    async function (this: CustomWorld, dataKey: string) {
-        const data = traineeData[dataKey as keyof typeof traineeData];
-        await this.addTraineePage.enterTraineeDetails(data);
+Given("user is on the homepage of the site",async function (this: CustomWorld) {
+        await this.addTraineePage.navigate();
     }
 );
 
-When("User clicks on the Add button", async function (this: CustomWorld) {
-    await this.addTraineePage.clickAddButton();
-});
+Given("user clicks on the add icon",async function (this: CustomWorld) {
+        await this.addTraineePage.clickaddemp();
 
-Then(
-    "User should see the employee {string} in the employee training list",
-    async function (this: CustomWorld, employeeName: string) {
-        await this.addTraineePage.verifyEmployeeAdded(employeeName);
+    }
+);
+
+Given("user enters the data {string}",async function (this: CustomWorld, type: string) {
+        const data = trainingData.find(
+            (item: any) => item.testType === type);
+
+        if (!data) {
+            throw new Error(`No test data found for ${type}`);
+        }
+
+        selectedData = data;
+
+        await this.addTraineePage.enterEmployeeData(
+            data.empId,
+            data.projectName,
+            data.employeeName,
+            data.course,
+            data.trainerName,
+            data.trainingType,
+            data.startDate,
+            data.endDate,
+            data.status,
+            data.percentageCompleted
+        );
+
+    }
+);
+
+When("user clicks on the add button",async function (this: CustomWorld) {
+        await this.addTraineePage.clickaddbtn();
+
+    }
+);
+
+Then("user should be able to see the record created in the list",async function (this: CustomWorld) {
+        await this.addTraineePage.checkadded(selectedData.empId);
+
     }
 );

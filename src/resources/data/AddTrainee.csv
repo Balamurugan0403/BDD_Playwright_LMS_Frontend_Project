@@ -1,0 +1,6 @@
+testType,projectName,empId,employeeName,course,trainerName,trainingType,startDate,endDate,status,percentageCompleted
+valid1,ABC,EMP001,Samiha M,Playwright Automation,Henry,Udemy,2026-07-20,2026-07-30,Not Started,0
+valid2,ABC,EMP002,John,Performance Testing,Henry,Udemy,2026-07-20,2026-07-30,In Progress,50
+empty_empid,ABC,,Samiha M,Playwright Automation,Henry,Udemy,2026-07-20,2026-07-30,Not Started,0
+end_before_start,ABC,EMP003,Samiha M,Cucumber BDD,Fathima,Udemy,2026-07-30,2026-07-20,In Progress,50
+invalid_percentage,ABC,EMP004,Samiha M,Playwright Automation,Fathima,Udemy,2026-07-20,2026-07-30,Completed,150
