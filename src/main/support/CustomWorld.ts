@@ -1,5 +1,8 @@
 import { Browser, BrowserContext, Page } from "@playwright/test";
 import { World, setWorldConstructor } from "@cucumber/cucumber";
+import { TrainingSummaryPage } from "../../test/pages/TrainingSummaryPage";
+import { SidebarPage } from "../../test/pages/SidebarPage";
+import { Service } from "../types/Service";
 
 //import { SidebarPage } from "../../test/pages/SidebarPage";
 //import { TrainingSummaryPage } from "../../test/pages/TrainingSummaryPage";
