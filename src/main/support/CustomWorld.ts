@@ -1,16 +1,13 @@
 import { BrowserContext, Browser, Page } from "@playwright/test";
 import { World, setWorldConstructor } from "@cucumber/cucumber";
-import { TrainingSummaryPage } from "../../test/pages/TrainingSummaryPage";
-import { SidebarPage } from "../../test/pages/SidebarPage";
-import { Service } from "../types/Service";
+import { EditEmployeePage } from "../../test/pages/EditEmployeePage";
 
 export class CustomWorld extends World {
     browser!: Browser;
     context!: BrowserContext;
     page!: Page;
-    sidebarPage!: SidebarPage;
-    service!: Service
-    trainingSummaryPage!:TrainingSummaryPage
+
+    editEmployee!: EditEmployeePage;
 }
 
 setWorldConstructor(CustomWorld);

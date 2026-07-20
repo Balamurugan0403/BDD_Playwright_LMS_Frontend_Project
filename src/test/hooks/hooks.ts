@@ -1,10 +1,10 @@
 import { Before, After, BeforeAll, AfterAll } from '@cucumber/cucumber';
 import { chromium, Browser, firefox, webkit } from '@playwright/test';
 import { CustomWorld } from '../../main/support/CustomWorld';
-import { config } from '../../main/config/Config';
-import { SidebarPage } from '../pages/SidebarPage';
-import { logger } from '../../main/utils/Logger';
-import { TrainingSummaryPage } from '../pages/TrainingSummaryPage';
+import { config } from '../../main/config/config';
+import { logger } from '../../main/utils/logger';
+
+import { EditEmployeePage } from './../pages/EditEmployeePage';
 
 let browser: Browser;
 BeforeAll(async () => {
@@ -30,8 +30,7 @@ Before(async function (this: CustomWorld, scenario) {
     this.context = await this.browser.newContext();
     this.page = await this.context.newPage();
 
-    this.sidebarPage = new SidebarPage(this.page);
-    this.trainingSummaryPage = new TrainingSummaryPage(this.page);
+    this.editEmployee = new EditEmployeePage(this.page);
 });
 
 After(async function (this: CustomWorld, scenario) {
