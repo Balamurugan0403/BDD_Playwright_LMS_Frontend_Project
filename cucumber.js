@@ -20,6 +20,7 @@ module.exports = {
         "allure-cucumberjs/reporter",
         "json:reports/cucumber-report.json",
         "html:reports/cucumber-report.html",
+        "@cucumber/pretty-formatter",
         "rerun:rerun/@rerun.txt"
     ],
         parallel: 1
