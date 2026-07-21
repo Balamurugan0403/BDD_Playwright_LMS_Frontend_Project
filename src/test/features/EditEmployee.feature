@@ -1,13 +1,17 @@
 @Rohini
-Feature: Rohini_15JUL2026_EditTrainee
+Feature: Rohini_16-07-2026_Edit the trainee training records in the site
 
-  As a user, I want to edit trainee training details.
 
-  Background:
-    Given user is on the Employee training records page
+Feature Description:
+    As a user,
+    I want to edit trainee training details.
 
-  Scenario: Edit all employee training details successfully
+Background:
+    Given user is on the homepage of the site
+
+Scenario: Edit specific fields of an existing trainee training record
+
     When User clicks the edit icon of an existing training record
-    And User updates all editable fields with valid data
+    And User updates the trainee training details
     And User clicks the Update button
-    Then Employee Training record should be updated successfully
+    Then Training record should be updated successfully

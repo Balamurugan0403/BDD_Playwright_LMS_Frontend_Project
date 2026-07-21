@@ -1,22 +1,25 @@
 import { Given, When, Then } from "@cucumber/cucumber";
 import { CustomWorld } from "../../main/support/CustomWorld";
+import editData from "../../resources/data/EditEmployeeData.json";
 
-Given("user is on the Employee training records page", async function (this: CustomWorld) {
-    await this.editEmployeePage.navigateToEmployeeTrainingPage();
+Given("user is on the homepage of the site", async function (this: CustomWorld) {
+    await this.editEmployeePage.navigate();   
 });
 
 When("User clicks the edit icon of an existing training record", async function (this: CustomWorld) {
     await this.editEmployeePage.clickEditIcon();
 });
 
-When("User updates all editable fields with valid data", async function (this: CustomWorld) {
-    await this.editEmployeePage.updateTrainingDetails();
+When("User updates the trainee training details", async function (this: CustomWorld) {
+    await this.editEmployeePage.updateTrainingDetails( editData.course, editData.trainerName);
 });
 
 When("User clicks the Update button", async function (this: CustomWorld) {
+
     await this.editEmployeePage.clickUpdateButton();
+
 });
 
-Then("Employee Training record should be updated successfully",async function (this: CustomWorld) {
-       await this.editEmployeePage.verifyEmployeeTrainingUpdated();
+Then("Training record should be updated successfully", async function (this: CustomWorld) {
+    await this.editEmployeePage.verifyUpdatedCourse(editData.course);
 });

@@ -23,7 +23,7 @@ module.exports = {
         "rerun:rerun/@rerun.txt"
     ],
         parallel: 1,
-        dryRun: true
+        dryRun: false
     },
     rerun:{
         requireModule: ["ts-node/register"],
