@@ -1,50 +1,56 @@
 module.exports = {
-    default: {
-        requireModule: ["ts-node/register"],
+  default: {
+    requireModule: ["ts-node/register"],
 
-        require: [
-            "src/test/steps/**/*.ts",
-            "src/test/hooks/**/*.ts"
-        ],
-
-        paths: [
-            "src/test/features/**/*.feature"
-        ],
-
-        formatOptions: {
-            snippetInterface: "async-await"
-        },
-
-        
-        format: [
-        "allure-cucumberjs/reporter",
-        "json:reports/cucumber-report.json",
-        "html:reports/cucumber-report.html",
-        "rerun:rerun/@rerun.txt"
+    require: [
+      "src/test/steps/**/*.ts",
+      "src/test/hooks/**/*.ts"
     ],
-        parallel: 1
+
+    paths: [
+      "src/test/features/**/*.feature"
+    ],
+
+    formatOptions: {
+      snippetInterface: "async-await",
+      resultsDir: "allure-results"
     },
-    rerun:{
-        requireModule: ["ts-node/register"],
 
-        require: [
-            "src/test/steps/**/*.ts",
-            "src/test/hooks/**/*.ts"
-        ],
+    format: [
+      "allure-cucumberjs/reporter",
+      "json:reports/cucumber-report.json",
+      "html:reports/cucumber-report.html",
+      "@cucumber/pretty-formatter",
+      "rerun:rerun/@rerun.txt"
+    ],
 
-        formatOptions: {
-            snippetInterface: "async-await"
-        },
+    parallel: 1
+  },
 
-        publishQuiet: true,
-        dryRun: false,
-        format: [
-        "allure-cucumberjs/reporter",
-        "json:reports/cucumber-report.json",
-        "html:reports/cucumber-report.html",
-        "rerun:rerun/@rerun.txt"
-        ],
+  rerun: {
+    requireModule: ["ts-node/register"],
 
-        parallel: 1
-    }
+    require: [
+      "src/test/steps/**/*.ts",
+      "src/test/hooks/**/*.ts"
+    ],
+
+    paths: [
+      "src/test/features/**/*.feature"
+    ],
+
+    formatOptions: {
+      snippetInterface: "async-await",
+      resultsDir: "allure-results"
+    },
+
+    format: [
+      "allure-cucumberjs/reporter",
+      "json:reports/cucumber-report.json",
+      "html:reports/cucumber-report.html",
+      "rerun:rerun/@rerun.txt"
+    ],
+
+    parallel: 1
+  }
 };
