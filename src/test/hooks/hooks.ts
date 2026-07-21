@@ -18,7 +18,7 @@ import { logger } from '../../main/utils/logger';
 // import { ServiceModelPage } from '../pages/ServiceModelPage';
 // import { TrainingSummaryPage } from '../pages/TrainingSummaryPage';
 import { AddTraineePage } from '../pages/AddTraineePage';
-
+import { ExportexcelPage } from "../pages/ExportexcelPage";
 let browser: Browser;
 
 BeforeAll(async () => {
@@ -62,6 +62,7 @@ Before(async function (this: CustomWorld) {
     // this.serviceModelPage = new ServiceModelPage(this.page);
     // this.trainingSummaryPage = new TrainingSummaryPage(this.page);
     this.addTraineePage = new AddTraineePage(this.page);
+    this.exportexcelPage = new ExportexcelPage(this.page);
 
 });
 
