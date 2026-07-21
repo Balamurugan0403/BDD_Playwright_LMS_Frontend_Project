@@ -2,7 +2,8 @@ import { Browser, BrowserContext, Page } from "@playwright/test";
 import { World, setWorldConstructor } from "@cucumber/cucumber";
 import { TrainingSummaryPage } from "../../test/pages/TrainingSummaryPage";
 import { SidebarPage } from "../../test/pages/SidebarPage";
-import { Service } from "../types/Service";
+import { ExportexcelPage } from "../../test/pages/ExportexcelPage";
+// import { Service } from "../types/Service";
 
 //import { SidebarPage } from "../../test/pages/SidebarPage";
 //import { TrainingSummaryPage } from "../../test/pages/TrainingSummaryPage";
@@ -16,6 +17,7 @@ export class CustomWorld extends World {
    // sidebarPage!: SidebarPage;
     //trainingSummaryPage!: TrainingSummaryPage;
     addTraineePage!: AddTraineePage;
+    exportexcelPage!: ExportexcelPage;
 }
 
 setWorldConstructor(CustomWorld);
