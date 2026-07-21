@@ -11,13 +11,8 @@ module.exports = {
       "src/test/features/**/*.feature"
     ],
 
-    formatOptions: {
-      snippetInterface: "async-await",
-      resultsDir: "allure-results"
-    },
-
     format: [
-      "allure-cucumberjs/reporter",
+      "allure-cucumberjs/reporter:allure-results",
       "json:reports/cucumber-report.json",
       "html:reports/cucumber-report.html",
       "@cucumber/pretty-formatter",
@@ -35,13 +30,8 @@ module.exports = {
       "src/test/hooks/**/*.ts"
     ],
 
-    formatOptions: {
-      snippetInterface: "async-await",
-      resultsDir: "allure-results"
-    },
-
     format: [
-      "allure-cucumberjs/reporter",
+      "allure-cucumberjs/reporter:allure-results",
       "json:reports/cucumber-report.json",
       "html:reports/cucumber-report.html",
       "rerun:rerun/@rerun.txt"
