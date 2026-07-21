@@ -17,10 +17,9 @@
   },
   "scripts": {
     "test": "cucumber-js",
-    "CourseFilter": "cucumber-js --tags @CourseFilter",
     "posttest": "npx ts-node src/main/utils/report.mts",
     "sowndariya": "cucumber-js  --tags @sowndariya",
-    "Samiha": "cucumber-js --tags @Samiha",
+    "Samiha": "cucumber-js --config cucumber.js --format allure-cucumberjs/reporter --tags \"@Samiha\"",
     "vignesh": "cucumber-js --tags @vignesh",
     "Rohini": "cucumber-js  --tags @Rohini",
     "bala": "cucumber-js  --tags @bala",
