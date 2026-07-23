@@ -4,6 +4,7 @@ import { TrainingSummaryPage } from "../../test/pages/TrainingSummaryPage";
 import { SidebarPage } from "../../test/pages/SidebarPage";
 import { DeleteTraineePage } from "../../test/pages/Deletetraineepage";
 import { AddTraineePage } from "../../test/pages/AddTraineePage";
+import { ExportexcelPage} from "../../test/page/ExportexcelPage";
 
 export class CustomWorld extends World {
     browser!: Browser;
@@ -11,6 +12,7 @@ export class CustomWorld extends World {
     page!: Page;
     addTraineePage!: AddTraineePage;
     deleteTraineePage!:DeleteTraineePage;
+    exportExcelPage!:ExportexcelPage;
 }
 
 setWorldConstructor(CustomWorld);
