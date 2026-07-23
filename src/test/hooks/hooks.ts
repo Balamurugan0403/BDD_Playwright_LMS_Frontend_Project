@@ -6,6 +6,7 @@ import { config } from '../../main/config/config';
 import { logger } from '../../main/utils/logger';
 import { AddTraineePage } from '../pages/AddTraineePage';
 import { DeleteTraineePage } from './../pages/Deletetraineepage';
+import { ExportexcelPage} from './../pages/ExportexcelPage';
 
 let browser: Browser;
 
@@ -38,6 +39,7 @@ Before(async function (this: CustomWorld) {
     this.page = await this.context.newPage();
     this.addTraineePage = new AddTraineePage(this.page);
     this.deleteTraineePage=new DeleteTraineePage(this.page);
+    this.exportExcelPage=new ExportexcelPage(this.page);
 
 });
 
