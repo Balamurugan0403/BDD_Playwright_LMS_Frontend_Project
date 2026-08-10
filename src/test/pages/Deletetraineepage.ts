@@ -1,43 +1,86 @@
-import { expect } from "@playwright/test";
+import { expect, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class DeleteTraineePage extends BasePage {
 
-    private readonly searchbox = this.page.getByRole("textbox", { name: /Search/i });
-
-    private readonly confirmDeleteBtn = this.page.getByRole("button", { name: /Yes|Confirm|Delete/i });
-
-    private getDeleteIcon(empId: string) {
+    private getTraineeRow(empId: string): Locator {
         return this.page
-            .locator("tr", { hasText: empId })
-            .getByRole("button", { name: /Delete/i });
+            .locator("tr")
+            .filter({ hasText: empId })
+            .first();
     }
 
-    private getEmpCell(empId: string) {
-        return this.page.getByRole("cell", { name: empId, exact: true });
+    private getEmpCell(empId: string): Locator {
+        return this.getTraineeRow(empId).getByText(empId, {
+            exact: true
+        });
     }
 
-    async searchTrainee(empId: string) {
-        await this.searchbox.fill(empId);
+
+    private getDeleteButton(empId: string): Locator {
+        return this.getTraineeRow(empId).getByRole("button", {
+            name: /delete/i
+        });
     }
 
-    async verifyTraineeVisible(empId: string) {
-        await expect(this.getEmpCell(empId).first()).toBeVisible({ timeout: 10000 });
+
+    private getConfirmDeleteButton(): Locator {
+        return this.page.getByRole("button", {
+            name: /yes|confirm|delete/i
+        }).last();
     }
 
-    async clickDeleteIcon(empId: string) {
-        await this.getDeleteIcon(empId).click();
+    async verifyTraineeExists(empId: string): Promise<void> {
+
+        const row = this.getTraineeRow(empId);
+
+        await expect(row).toBeVisible({
+            timeout: 10000
+        });
+
+        console.log(`Trainee ${empId} is available in the list`);
     }
 
-    async confirmDelete() {
-        await this.click(this.confirmDeleteBtn);
+    async clickDeleteIcon(empId: string): Promise<void> {
+
+        const row = this.getTraineeRow(empId);
+
+        await expect(row).toBeVisible({
+            timeout: 10000
+        });
+
+        const deleteButton = this.getDeleteButton(empId);
+
+        await expect(deleteButton).toBeVisible({
+            timeout: 10000
+        });
+
+        await deleteButton.click();
+
+        console.log(`Delete button clicked for trainee ${empId}`);
     }
 
-    async verifyDeleteSuccessful() {
-        await this.page.waitForTimeout(2000);
+    async confirmDelete(): Promise<void> {
+
+        const confirmButton = this.getConfirmDeleteButton();
+
+        await expect(confirmButton).toBeVisible({
+            timeout: 10000
+        });
+
+        await confirmButton.click();
+
+        console.log("Delete action confirmed");
     }
 
-    async verifyTraineeNotVisible(empId: string) {
-        await expect(this.getEmpCell(empId)).toHaveCount(0, { timeout: 10000 });
+    async verifyDeleteSuccessful(empId: string): Promise<void> {
+
+        const row = this.getTraineeRow(empId);
+
+        await expect(row).toHaveCount(0, {
+            timeout: 10000
+        });
+
+        console.log(`Trainee ${empId} deleted successfully`);
     }
 }
