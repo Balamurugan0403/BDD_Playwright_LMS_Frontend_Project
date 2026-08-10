@@ -4,7 +4,7 @@ import { TrainingSummaryPage } from "../../test/pages/TrainingSummaryPage";
 import { SidebarPage } from "../../test/pages/SidebarPage";
 import { DeleteTraineePage } from "../../test/pages/Deletetraineepage";
 import { AddTraineePage } from "../../test/pages/AddTraineePage";
-import { ExportexcelPage} from "../../test/page/ExportexcelPage";
+import { ExportexcelPage } from "../../test/pages/ExportexcelPage";
 
 export class CustomWorld extends World {
     browser!: Browser;
