@@ -5,7 +5,7 @@ import { CustomWorld } from "../../main/support/CustomWorld";
 let downloadedFile: any;
 
 When("User clicks the Export to Excel button", async function (this: CustomWorld) {
-    downloadedFile = await this.exportexcelPage.exportEmployeeDetails();
+    downloadedFile = await this.exportExcelPage.exportEmployeeDetails();
 });
 
 Then("Excel file should be downloaded successfully", async function () {
