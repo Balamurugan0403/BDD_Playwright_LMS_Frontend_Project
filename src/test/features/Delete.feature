@@ -5,15 +5,12 @@ Background:
     Given user is on the homepage of the site
 
 Scenario Outline: Delete a trainee record and verify it is removed
-Given user searches for the trainee "<empId>" in the filter
-Then user should see the trainee "<empId>" in the filtered list
-When user clicks on the delete icon for trainee "<empId>"
-And user confirms the delete action
-Then the trainee "<empId>" should be deleted successfully
-When user searches again for the trainee "<empId>" in the filter
-Then the trainee "<empId>" should not be shown in the list
+Given user filters the trainee "<empId>" with name "<employeeName>" and course "<course>"
+Then user should see the filtered trainee record
+When user clicks the delete icon for the filtered record
+Then the filtered trainee record should be deleted successfully
 
 Examples:
-    | empId  |
-    | EMP001 |
-    | EMP002 |
+    | empId  | employeeName | course                 |
+    | EMP004 | Samiha M     | Playwright Automation  |
+    | EMP003 | Samiha M     | Cucumber BDD           |

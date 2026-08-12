@@ -1,7 +1,6 @@
 # Dependencies
 node_modules/
 rerun/
-package-lock.json
 
 # Build output
 dist/
