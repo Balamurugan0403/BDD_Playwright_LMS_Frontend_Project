@@ -2,7 +2,7 @@
 // import path from "path";
 
 // import { CustomWorld } from "../../main/support/CustomWorld";
-// //import { CSVReader } from "../../main/utils/csv_reader";
+// import { CSVReader } from "../../main/utils/CSVReader";
 
 // const csvPath = path.resolve(__dirname,"../../resources/data/AddTrainee.csv");
 // const trainingData = CSVReader.getData<any>(csvPath);

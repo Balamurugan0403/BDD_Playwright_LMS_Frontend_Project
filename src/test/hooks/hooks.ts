@@ -5,8 +5,10 @@ import { CustomWorld } from '../../main/support/CustomWorld';
 import { config } from '../../main/config/config';
 import { logger } from '../../main/utils/logger';
 
-import { AddTraineePage } from '../pages/AddTraineePage';
 import { EditEmployeePage } from '../pages/EditEmployeePage';
+import { AddTraineePage } from '../pages/AddTraineePage';
+import { DeleteTraineePage } from './../pages/Deletetraineepage';
+import { ExportexcelPage} from './../pages/ExportexcelPage';
 
 let browser: Browser;
 
@@ -40,6 +42,8 @@ Before(async function (this: CustomWorld) {
 
     this.editEmployeePage = new EditEmployeePage(this.page);
     this.addTraineePage = new AddTraineePage(this.page);
+    this.deleteTraineePage=new DeleteTraineePage(this.page);
+    this.exportExcelPage=new ExportexcelPage(this.page);
 
 });
 
