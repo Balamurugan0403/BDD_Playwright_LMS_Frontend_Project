@@ -4,6 +4,8 @@ import { chromium, firefox, webkit, Browser } from '@playwright/test';
 import { CustomWorld } from '../../main/support/CustomWorld';
 import { config } from '../../main/config/config';
 import { logger } from '../../main/utils/logger';
+
+import { EditEmployeePage } from '../pages/EditEmployeePage';
 import { AddTraineePage } from '../pages/AddTraineePage';
 import { DeleteTraineePage } from './../pages/Deletetraineepage';
 import { ExportexcelPage} from './../pages/ExportexcelPage';
@@ -37,6 +39,8 @@ Before(async function (this: CustomWorld) {
     this.browser = browser;
     this.context = await browser.newContext();
     this.page = await this.context.newPage();
+
+    this.editEmployeePage = new EditEmployeePage(this.page);
     this.addTraineePage = new AddTraineePage(this.page);
     this.deleteTraineePage=new DeleteTraineePage(this.page);
     this.exportExcelPage=new ExportexcelPage(this.page);
