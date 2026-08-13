@@ -12,5 +12,4 @@ Then the filtered trainee record should be deleted successfully
 
 Examples:
     | empId  | employeeName | course                 |
-    | EMP004 | Samiha M     | Playwright Automation  |
     | EMP003 | Samiha M     | Cucumber BDD           |
