@@ -14,11 +14,12 @@ Given("user is on the homepage of the site",async function (this: CustomWorld) {
     }
 );
 
-Given("user clicks on the add icon",async function (this: CustomWorld) {
-        await this.addTraineePage.clickaddemp();
+Given("user clicks on the {string} icon",async function (this: CustomWorld, s: string) {
+        await this.addTraineePage.clickSidebarOption(s);
 
     }
 );
+
 
 Given("user enters the data {string}",async function (this: CustomWorld, type: string) {
         const data = trainingData.find(
@@ -54,6 +55,10 @@ When("user clicks on the add button",async function (this: CustomWorld) {
 
 Then("user should be able to see the record created in the list",async function (this: CustomWorld) {
         await this.addTraineePage.checkadded(selectedData.empId);
-
     }
 );
+
+
+
+
+
