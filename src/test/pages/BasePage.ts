@@ -37,6 +37,10 @@ export class BasePage{
         await locator.check();
     }
 
+    async clear(locator: Locator) {
+        await locator.clear();
+    }
+
     async isVisible(locator:Locator){
         return await locator.isVisible();
     }

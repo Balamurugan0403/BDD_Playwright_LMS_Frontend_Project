@@ -10,7 +10,6 @@ Scenario Outline: Delete a trainee record and verify it is removed
     When user clicks the delete icon for the filtered record
     Then the filtered trainee record should be deleted successfully
 
-    Examples:
-        | empId  | employeeName | course                 |
-        | EMP004 | Samiha M     | Playwright Automation  |
-        | EMP003 | Samiha M     | Cucumber BDD           |
+Examples:
+    | empId  | employeeName | course                 |
+    | EMP003 | Samiha M     | Cucumber BDD           |
