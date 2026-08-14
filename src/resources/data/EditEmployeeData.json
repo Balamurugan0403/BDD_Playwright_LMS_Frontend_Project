@@ -1,4 +1,14 @@
 {
-    "course": "Playwright with TypeScript",
-    "trainerName": "Priyanka"
+    "specificFields": {
+        "course": "Playwright with TypeScript",
+        "trainerName": "Priyanka"
+    },
+    "allFields": {
+        "course": "Advanced Java",
+        "trainerName": "Abi",
+        "startDate": "2024-09-03",
+        "endDate": "2027-08-27",
+        "status": "In Progress",
+        "completed": "10"
+    }
 }
