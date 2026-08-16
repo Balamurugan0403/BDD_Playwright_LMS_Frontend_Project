@@ -6,10 +6,10 @@ export class HomePage extends BasePage {
     private exportButton = this.page.getByRole("button", {name: "EXPORT TO EXCEL"});
     private dataRows = this.page.locator("tbody tr");
 
-    private projectNameOptions = this.page.locator("class='MuiList-root MuiList-padding MuiMenu-list css-ubifyk'");
+    private dropDownOptions = this.page.locator("//ul[@class= 'MuiList-root MuiList-padding MuiMenu-list css-ubifyk' ]/li");
 
-    private async getFilter (key: string) {
-        const xpath = `MuiTableRow-root MuiTableRow-head css-1n1e43z']/th[${key}]/div/div/input`
+    private async getFilter (key: number) {
+        const xpath = `//tr[@class = 'MuiTableRow-root MuiTableRow-head css-1n1e43z']/th[${key}]/div/div/input`
         return this.page.locator(xpath);
     }
 
@@ -33,5 +33,106 @@ export class HomePage extends BasePage {
 
     async verifyRowRemoved() {
         await this.page.waitForTimeout(500);
+    }
+
+    private selectedFilterValue: string = "";
+
+    async selectFilterOption(option: string): Promise<string> {
+
+        let index: number;
+
+        switch (option) {
+            case "Project Name":
+                index = 1;
+                break;
+
+            case "Training Type":
+                index = 6;
+                break;
+
+            case "Status":
+                index = 9;
+                break;
+
+            default:
+                throw new Error(`Invalid filter option: ${option}`);
+        }
+
+        const filter = await this.getFilter(index);
+
+        await filter.click();
+
+        const options = this.dropDownOptions;
+
+        const count = await options.count();
+
+        if (count === 0) {
+            throw new Error(`No dropdown options found for ${option}`);
+        }
+
+        /*
+        * Select the first available option.
+        * If you want a specific value later, this can easily
+        * be changed to selectOption().
+        */
+        const selectedOption = options.first();
+
+        this.selectedFilterValue = (
+            await selectedOption.innerText()
+        ).trim();
+
+        await selectedOption.click();
+
+        return this.selectedFilterValue;
+    }
+
+    async verifyFilteredRecords(option: string, expectedValue: string) {
+
+        let columnIndex: number;
+
+        switch (option) {
+            case "Project Name":
+                columnIndex = 1;
+                break;
+
+            case "Training Type":
+                columnIndex = 6;
+                break;
+
+            case "Status":
+                columnIndex = 9;
+                break;
+
+            default:
+                throw new Error(`Invalid filter option: ${option}`);
+        }
+
+        const rows = this.dataRows;
+        const rowCount = await rows.count();
+
+        if (rowCount === 0) {
+            throw new Error(
+                `No records found after applying ${option} filter`
+            );
+        }
+
+        for (let i = 0; i < rowCount; i++) {
+
+            const cell = rows.nth(i).locator(
+                `td:nth-child(${columnIndex})`
+            );
+
+            const actualValue = (
+                await cell.innerText()
+            ).trim();
+
+            if (actualValue !== expectedValue) {
+                throw new Error(
+                    `${option} filter failed. ` +
+                    `Expected "${expectedValue}" but found "${actualValue}" ` +
+                    `in row ${i + 1}`
+                );
+            }
+        }
     }
 }
