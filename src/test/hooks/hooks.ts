@@ -11,38 +11,52 @@ import { HomePage } from '../pages/HomePage';
 
 let browser: Browser;
 
-BeforeAll(async () => {
-    if (config.browser === "chromium") {
-        logger.info("Launching Chrome browser");
-        browser = await chromium.launch({
-            headless: config.headless,
-            slowMo: config.slowMo
-        });
-    } else if (config.browser === "firefox") {
-        logger.info("Launching Firefox browser");
-        browser = await firefox.launch({
-            headless: config.headless,
-            slowMo: config.slowMo
-        });
-    } else {
-        logger.info("Launching WebKit browser");
-        browser = await webkit.launch({
-            headless: config.headless,
-            slowMo: config.slowMo
-        });
+BeforeAll({ timeout: 30 * 1000 }, async () => {
+    try {
+        if (config.browser === "chromium") {
+            logger.info("Launching Chrome browser");
+
+            browser = await chromium.launch({
+                headless: config.headless,
+                slowMo: config.slowMo
+            });
+
+        } else if (config.browser === "firefox") {
+            logger.info("Launching Firefox browser");
+
+            browser = await firefox.launch({
+                headless: config.headless,
+                slowMo: config.slowMo
+            });
+
+        } else {
+            logger.info("Launching WebKit browser");
+
+            browser = await webkit.launch({
+                headless: config.headless,
+                slowMo: config.slowMo
+            });
+        }
+
+        logger.info(`${config.browser} browser launched successfully`);
+
+    } catch (error) {
+        logger.error(`Failed to launch ${config.browser} browser`, error);
+        throw error;
     }
 });
 
 Before(async function (this: CustomWorld) {
 
     this.browser = browser;
+
     this.context = await browser.newContext();
+
     this.page = await this.context.newPage();
 
-    this.editEmployeePage = new EditEmployeePage(this.page);
     this.addTraineePage = new AddTraineePage(this.page);
-    this.homePage = new HomePage(this.page);
 
+    this.homePage = new HomePage(this.page);
 });
 
 After(async function (this: CustomWorld, scenario) {
@@ -58,6 +72,11 @@ After(async function (this: CustomWorld, scenario) {
     await this.context.close();
 });
 
-AfterAll(async () => {
-    await browser.close();
+AfterAll({ timeout: 30 * 1000 }, async () => {
+
+    if (browser) {
+        await browser.close();
+    }
+
+    logger.info("Browser closed successfully");
 });

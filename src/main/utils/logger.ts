@@ -1,17 +1,37 @@
-import { createLogger, format, transports } from "winston";
+import winston from "winston";
 
-export const logger = createLogger({
+const { combine, timestamp, printf, colorize, errors } = winston.format;
+
+const logFormat = printf(({ timestamp, level, message, stack }) => {
+    return `${timestamp} [${level.toUpperCase()}] ${stack || message}`;
+});
+
+export const logger = winston.createLogger({
     level: "info",
-    format: format.combine(
-        format.timestamp({
+
+    format: combine(
+        timestamp({
             format: "YYYY-MM-DD HH:mm:ss"
         }),
-
-        format.printf((info: any) => {
-            return `${info.timestamp} [${info.level.toUpperCase()}] ${info.message}`;
-        })
+        errors({ stack: true }),
+        logFormat
     ),
     transports: [
-        new transports.Console()
+        // Console logs
+        new winston.transports.Console({
+            format: combine(
+                colorize(),
+                timestamp({
+                    format: "YYYY-MM-DD HH:mm:ss"
+                }),
+                errors({ stack: true }),
+                logFormat
+            )
+        }),
+
+        // File logs
+        new winston.transports.File({
+            filename: "logs/framework.log"
+        })
     ]
 });
