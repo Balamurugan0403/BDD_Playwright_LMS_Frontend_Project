@@ -62,10 +62,21 @@ Before(async function (this: CustomWorld) {
 After(async function (this: CustomWorld, scenario) {
 
     if (scenario.result?.status === "FAILED") {
+
+        const screenshot = await this.page.screenshot({
+            fullPage: true
+        }); 
+
+        this.attach(screenshot,"image/png");
+
+        const screenshotPath =
+            `reports/screenshots/${Date.now()}.png`;
+
         await this.page.screenshot({
-            path: `reports/screenshots/${Date.now()}.png`,
+            path: screenshotPath,
             fullPage: true
         });
+
     }
 
     await this.page.close();
