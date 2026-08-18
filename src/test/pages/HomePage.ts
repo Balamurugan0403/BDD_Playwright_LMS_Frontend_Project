@@ -13,6 +13,31 @@ export class HomePage extends BasePage {
         return this.page.locator(xpath);
     }
 
+    private getFilterIndex (option: string) : number {
+        
+        let index: number;
+
+        switch (option) {
+            case "Project Name":
+                index = 1;
+                break;
+
+            case "Training Type":
+                index = 6;
+                break;
+
+            case "Status":
+                index = 9;
+                break;
+
+            default:
+                throw new Error(`Invalid filter option: ${option}`);
+        }
+
+        return index;
+
+    }
+
     async exportEmployeeDetails() {
         logger.info("Clicking Export to Excel button");
         const downloadEvent = this.page.waitForEvent("download");
@@ -39,24 +64,7 @@ export class HomePage extends BasePage {
 
     async selectFilterOption(option: string): Promise<string> {
 
-        let index: number;
-
-        switch (option) {
-            case "Project Name":
-                index = 1;
-                break;
-
-            case "Training Type":
-                index = 6;
-                break;
-
-            case "Status":
-                index = 9;
-                break;
-
-            default:
-                throw new Error(`Invalid filter option: ${option}`);
-        }
+        let index: number = this.getFilterIndex(option);
 
         const filter = await this.getFilter(index);
 
@@ -70,11 +78,6 @@ export class HomePage extends BasePage {
             throw new Error(`No dropdown options found for ${option}`);
         }
 
-        /*
-        * Select the first available option.
-        * If you want a specific value later, this can easily
-        * be changed to selectOption().
-        */
         const selectedOption = options.first();
 
         this.selectedFilterValue = (
@@ -86,26 +89,10 @@ export class HomePage extends BasePage {
         return this.selectedFilterValue;
     }
 
+    
     async verifyFilteredRecords(option: string, expectedValue: string) {
 
-        let columnIndex: number;
-
-        switch (option) {
-            case "Project Name":
-                columnIndex = 1;
-                break;
-
-            case "Training Type":
-                columnIndex = 6;
-                break;
-
-            case "Status":
-                columnIndex = 9;
-                break;
-
-            default:
-                throw new Error(`Invalid filter option: ${option}`);
-        }
+        let columnIndex: number = this.getFilterIndex(option);
 
         const rows = this.dataRows;
         const rowCount = await rows.count();
