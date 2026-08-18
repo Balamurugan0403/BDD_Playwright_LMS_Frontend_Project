@@ -5,7 +5,7 @@ export class BasePage{
     constructor(protected page:Page){}
 
     private async getSidebarLocator (key: string) {
-        const xpath = `//div[@title = '${key}']`
+        const xpath = `//button[@aria-label = '${key}']`
         return this.page.locator(xpath);
     }
 
