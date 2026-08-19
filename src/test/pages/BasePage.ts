@@ -4,6 +4,15 @@ import { config } from "../../main/config/config";
 export class BasePage{
     constructor(protected page:Page){}
 
+    private async getSidebarLocator (key: string) {
+        const xpath = `//button[@aria-label = '${key}']`
+        return this.page.locator(xpath);
+    }
+
+    async clickSidebarOption(key: string) {
+        await this.click(await this.getSidebarLocator(key));
+    }
+
     async navigate() {
         await this.page.goto(config.baseUrl);
     }

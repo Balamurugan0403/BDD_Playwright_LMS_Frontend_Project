@@ -2,9 +2,6 @@ import { Given, When, Then } from "@cucumber/cucumber";
 import { CustomWorld } from "../../main/support/CustomWorld";
 import editData from "../../resources/data/EditEmployeeData.json";
 
-Given("user is on the homepage of the site", async function (this: CustomWorld) {
-    await this.editEmployeePage.navigate();   
-});
 
 When("User clicks the edit icon of an existing training record", async function (this: CustomWorld) {
     await this.editEmployeePage.clickEditIcon();
