@@ -53,18 +53,46 @@ export class HomePage extends BasePage {
         return await downloadEvent;
     }
 
+    private filteredRow!: Locator;
+    private filteredRowCountBeforeDelete: number = 0;
+
+    async filterTrainee(empId: string, employeeName: string, course: string) {
+        logger.info(`Filtering trainee EMP ID: ${empId}, Name: ${employeeName}, Course: ${course}`);
+
+        this.filteredRow = this.dataRows
+            .filter({ has: this.page.locator("td:nth-child(2)", { hasText: new RegExp(`^\\s*${empId}\\s*$`) }) })
+            .filter({ has: this.page.locator("td:nth-child(3)", { hasText: new RegExp(`^\\s*${employeeName}\\s*$`) }) })
+            .filter({ has: this.page.locator("td:nth-child(4)", { hasText: new RegExp(`^\\s*${course}\\s*$`) }) });
+    }
+
+    async verifyFilteredRecordVisible() {
+        // Multiple rows can share the same EMP ID / Name / Course (duplicates are expected),
+        // so we only assert that at least one matching row is present.
+        await expect(this.filteredRow.first()).toBeVisible({
+            timeout: 20000
+        });
+    }
+
     async clickDeleteIcon() {
-        const row = this.dataRows.first();
+        const row = this.filteredRow.first();
 
         await expect(row).toBeVisible({
             timeout: 20000
         });
+
+        // Remember how many matching rows existed before delete, so we can verify
+        // exactly one of them was removed (there may still be duplicates left).
+        this.filteredRowCountBeforeDelete = await this.filteredRow.count();
+
         await row.getByRole("button", { name: /Delete/i }).click();
         await this.page.waitForTimeout(2000);
     }
 
     async verifyRowRemoved() {
-        await this.page.waitForTimeout(500);
+        await expect(this.filteredRow).toHaveCount(
+            this.filteredRowCountBeforeDelete - 1,
+            { timeout: 10000 }
+        );
     }
 
     private selectedFilterValue: string = "";
