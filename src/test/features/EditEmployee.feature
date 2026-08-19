@@ -1,7 +1,6 @@
 @Rohini
 Feature: Rohini_15-07-2026_Edit the trainee training records in the site
 
-
     Feature Description:
     As a user,
     I want to edit trainee training details.

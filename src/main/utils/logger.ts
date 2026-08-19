@@ -20,7 +20,7 @@ export const logger = winston.createLogger({
         // Console logs
         new winston.transports.Console({
             format: combine(
-                colorize(),
+                
                 timestamp({
                     format: "YYYY-MM-DD HH:mm:ss"
                 }),
