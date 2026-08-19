@@ -66,8 +66,6 @@ export class HomePage extends BasePage {
     }
 
     async verifyFilteredRecordVisible() {
-        // Multiple rows can share the same EMP ID / Name / Course (duplicates are expected),
-        // so we only assert that at least one matching row is present.
         await expect(this.filteredRow.first()).toBeVisible({
             timeout: 20000
         });
@@ -79,9 +77,6 @@ export class HomePage extends BasePage {
         await expect(row).toBeVisible({
             timeout: 20000
         });
-
-        // Remember how many matching rows existed before delete, so we can verify
-        // exactly one of them was removed (there may still be duplicates left).
         this.filteredRowCountBeforeDelete = await this.filteredRow.count();
 
         await row.getByRole("button", { name: /Delete/i }).click();
