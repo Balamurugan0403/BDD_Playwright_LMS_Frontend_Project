@@ -28,13 +28,46 @@ export class HomePage extends BasePage {
             case "Project Name":
                 index = 1;
                 break;
+            
+            case "EMP ID":
+                index = 2;
+                break;
 
+            case "Employee Name":
+                index = 3;
+                break;
+
+            case "Course":
+                index = 4;
+                break;
+
+            case "Trainer Name":
+                index = 5;
+                break;
+
+            case "Project Name":
+                index = 1;
+                break;
+
+            
             case "Training Type":
                 index = 6;
                 break;
 
+            case "Start Date":
+                index = 7;
+                break;
+
+            case "End Date":
+                index = 8;
+                break;
+
             case "Status":
                 index = 9;
+                break;
+
+            case "Percentage Completed":
+                index = 10;
                 break;
 
             default:
@@ -141,7 +174,7 @@ export class HomePage extends BasePage {
                 await cell.innerText()
             ).trim();
 
-            if (actualValue !== expectedValue) {
+            if (!actualValue.startsWith(expectedValue)) {
                 throw new Error(
                     `${option} filter failed. ` +
                     `Expected "${expectedValue}" but found "${actualValue}" ` +
@@ -149,5 +182,14 @@ export class HomePage extends BasePage {
                 );
             }
         }
+    }
+
+    async enterTextInFilter(option: string, key: string) {
+
+        let index: number = this.getFilterIndex(option);
+        logger.info("The index of the filter option is: "+index);
+        const filter = await this.getFilter(index);
+
+        await this.fill(filter, key);
     }
 }

@@ -18,3 +18,16 @@ Feature: VIGNESHWARAN_M_15-07-2026_Filter Trainee Feature
       | Project Name  |
       | Training Type |
       | Status        |
+
+  Scenario Outline: To verify the input field filters
+    Given user clicks on the "Training Summary" icon
+    When the user enters the created user's "<data>" in "<input>" field
+    Then the records starting with that data should only be displayed
+
+    Examples:
+      | Data                | Input                |
+      | empId               | EMP Id               |
+      | employeeName        | Employee Name        |
+      | course              | Course               |
+      | trainerName         | Trainer Name         |
+      | percentageCompleted | Percentage Completed |
