@@ -20,4 +20,8 @@ Feature: Rohini_15-07-2026_Edit the trainee training records in the site
         And User clicks the Update button
         Then Training record should be updated successfully
 
-    
+    Scenario: Edit existing trainee training record without making any changes
+        When User clicks the edit icon of an existing training record
+        And User does not modify any trainee training details
+        And User clicks the Update button
+        Then Trainee training details should remain unchanged
