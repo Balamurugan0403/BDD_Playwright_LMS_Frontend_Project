@@ -4,6 +4,14 @@ import { config } from "../../main/config/config"
 import { logger } from '../../main/utils/logger';
 
 export class EditEmployeePage extends BasePage {
+    private originalTrainingDetails!: {
+        course: string;
+        trainerName: string;
+        startDate: string;
+        endDate: string;
+        status: string;
+        completed: string;
+    };
 
     private readonly editIcon = this.page.locator("//tr[td[contains(normalize-space(),'Demo')]]//button[@aria-label='edit']");
     private readonly course = this.page.locator('//input[@name="course"]');
@@ -45,36 +53,36 @@ export class EditEmployeePage extends BasePage {
         await this.fill(this.trainername, trainer);
         
         // Start Date
-        console.log("Updating Start Date");
+        //console.log("Updating Start Date");
         await expect(this.startDate).toBeVisible({timeout: 30000});
         await this.startDate.fill("");
         await this.startDate.fill(startDate);
         await expect(this.startDate).toHaveValue(startDate, {timeout: 30000});
-        console.log(`Start Date entered successfully: ${startDate}`);
+        //console.log(`Start Date entered successfully: ${startDate}`);
 
 
         // End Date
-        console.log("Updating End Date");
+        //console.log("Updating End Date");
         await expect(this.endDate).toBeVisible({timeout: 30000});
         await this.endDate.fill("");
         await this.endDate.fill(endDate);
         await expect(this.endDate).toHaveValue(endDate, {timeout: 30000});
-        console.log(`End Date entered successfully: ${endDate}`);
+        //console.log(`End Date entered successfully: ${endDate}`);
 
         // Status
         console.log("Updating Status");
         await expect(this.status).toBeVisible({ timeout: 30000 });
         await this.status.click();
         await this.page.getByRole('option', { name: status, exact: true }).click();
-        console.log(`Status updated successfully: ${status}`);
+        //console.log(`Status updated successfully: ${status}`);
 
         // % Completed
-        console.log("Updating % Completed");
+        //console.log("Updating % Completed");
         await expect(this.completed).toBeVisible({ timeout: 30000 });
         await this.completed.fill("");
         await this.completed.fill(completed);
         await expect(this.completed).toHaveValue(completed, {timeout: 30000});
-        console.log(`% Completed entered successfully: ${completed}`);
+        //console.log(`% Completed entered successfully: ${completed}`);
     }
 
     async clickUpdateButton() {
@@ -93,6 +101,28 @@ export class EditEmployeePage extends BasePage {
         await expect(this.endDate).toHaveValue(expectedEndDate,{ timeout: 30000 });
         await expect(this.status).toContainText(expectedStatus, {timeout: 30000});
         await expect(this.completed).toHaveValue(expectedCompleted,{ timeout: 30000 });
+    }
+
+    async getTrainingDetails() {
+        return {course: await this.course.inputValue(), trainerName: await this.trainername.inputValue(), startDate: await this.startDate.inputValue(), endDate: await this.endDate.inputValue(), status: await this.status.textContent(), completed: await this.completed.inputValue()};
+    }
+    async storeOriginalTrainingDetails() {
+        const course = await this.course.inputValue();
+        const trainerName = await this.trainername.inputValue();
+        const startDate = await this.startDate.inputValue();
+        const endDate = await this.endDate.inputValue();
+        const status = (await this.status.textContent())?.trim() ?? "";
+        const completed = await this.completed.inputValue();
+        this.originalTrainingDetails = {course, trainerName, startDate, endDate, status, completed};
+    }
+    async verifyOriginalTrainingDetails() {
+        await expect(this.course).toHaveValue(this.originalTrainingDetails.course);
+        await expect(this.trainername).toHaveValue(this.originalTrainingDetails.trainerName);
+        await expect(this.startDate).toHaveValue(this.originalTrainingDetails.startDate);
+        await expect(this.endDate).toHaveValue(this.originalTrainingDetails.endDate);
+        await expect(this.status).toContainText(this.originalTrainingDetails.status);
+        await expect(this.completed).toHaveValue(this.originalTrainingDetails.completed);
+        logger.info("Trainee training details remain unchanged");
     }
 
 }
