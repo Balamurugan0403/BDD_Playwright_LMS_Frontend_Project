@@ -30,6 +30,8 @@ Given("user enters the data {string}",async function (this: CustomWorld, type: s
 
         selectedData = data;
 
+        this.employee = data;
+
         await this.addTraineePage.enterEmployeeData(
             data.empId,
             data.projectName,
