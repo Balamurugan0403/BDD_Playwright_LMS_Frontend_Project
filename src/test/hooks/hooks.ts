@@ -55,7 +55,7 @@ Before(async function (this: CustomWorld) {
     this.page = await this.context.newPage();
 
     this.addTraineePage = new AddTraineePage(this.page);
-
+    this.editEmployeePage = new EditEmployeePage(this.page);
     this.homePage = new HomePage(this.page);
 });
 
