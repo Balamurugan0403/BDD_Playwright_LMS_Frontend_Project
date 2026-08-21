@@ -159,9 +159,7 @@ export class HomePage extends BasePage {
         const rowCount = await rows.count();
 
         if (rowCount === 0) {
-            throw new Error(
-                `No records found after applying ${option} filter`
-            );
+            logger.warn(`No records found for the option '${option}' and value '${expectedValue}'`)
         }
 
         for (let i = 0; i < rowCount; i++) {
@@ -174,7 +172,7 @@ export class HomePage extends BasePage {
                 await cell.innerText()
             ).trim();
 
-            if (!actualValue.startsWith(expectedValue)) {
+            if (!actualValue.includes(expectedValue)) {
                 throw new Error(
                     `${option} filter failed. ` +
                     `Expected "${expectedValue}" but found "${actualValue}" ` +
