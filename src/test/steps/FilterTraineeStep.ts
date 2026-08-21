@@ -16,7 +16,7 @@ Then('the records with that project name only should be displayed', async functi
     }
 );
 
-Then('the records starting with that data should only be displayed', async function (this: CustomWorld)  {
+Then('the records containing that data should only be displayed', async function (this: CustomWorld)  {
     await this.homePage.verifyFilteredRecords(selectedFilter,selectedFilterValue);
 })
 

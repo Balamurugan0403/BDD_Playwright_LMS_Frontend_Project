@@ -22,11 +22,11 @@ Feature: VIGNESHWARAN_M_15-07-2026_Filter Trainee Feature
   Scenario Outline: To verify the input field filters
     Given user clicks on the "Training Summary" icon
     When the user enters the created user's "<data>" in "<input>" field
-    Then the records starting with that data should only be displayed
+    Then the records containing that data should only be displayed
 
     Examples:
-      | Data                | Input                |
-      | empId               | EMP Id               |
+      | data                | input                |
+      | empId               | EMP ID               |
       | employeeName        | Employee Name        |
       | course              | Course               |
       | trainerName         | Trainer Name         |
