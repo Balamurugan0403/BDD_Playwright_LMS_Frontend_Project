@@ -9,7 +9,7 @@ dotenv.config({
 export const config = {
     baseUrl: process.env.BASE_URL!,
     browser: process.env.BROWSER || "chromium",
-    headless: process.env.HEADLESS === "false",
+    headless: process.env.HEADLESS === "true",
     slowMo: Number(process.env.SLOWMO) || 0,
     timeout: Number(process.env.TIMEOUT) || 100000,
     dynamicUrl:process.env.DYNAMIC_FIELD_URL!
