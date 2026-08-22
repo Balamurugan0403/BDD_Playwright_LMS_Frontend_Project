@@ -19,6 +19,7 @@ Feature: VIGNESHWARAN_M_15-07-2026_Filter Trainee Feature
       | Training Type |
       | Status        |
 
+  
   Scenario Outline: To verify the input field filters
     Given user clicks on the "Training Summary" icon
     When the user enters the created user's "<data>" in "<input>" field
@@ -30,4 +31,6 @@ Feature: VIGNESHWARAN_M_15-07-2026_Filter Trainee Feature
       | employeeName        | Employee Name        |
       | course              | Course               |
       | trainerName         | Trainer Name         |
+      | startDate           | Start Date           |
+      | endDate             | End Date             |
       | percentageCompleted | Percentage Completed |
