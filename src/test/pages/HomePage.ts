@@ -172,7 +172,14 @@ export class HomePage extends BasePage {
                 await cell.innerText()
             ).trim();
 
-            if (!actualValue.includes(expectedValue)) {
+            if(columnIndex === 7 || columnIndex === 8) {
+                const expectedDate = expectedValue.split("-").sort();
+                const actualDate = actualValue.split("/").sort();
+
+                expect(actualDate).toEqual(expectedDate);
+            }
+
+            else if (!actualValue.includes(expectedValue)) {
                 throw new Error(
                     `${option} filter failed. ` +
                     `Expected "${expectedValue}" but found "${actualValue}" ` +
